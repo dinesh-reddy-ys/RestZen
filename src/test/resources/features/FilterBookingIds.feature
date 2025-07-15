@@ -8,7 +8,7 @@
 #    When I send a GET request with firstname parameter "John"
 #    Then the response status code should be 200
 #    And all returned bookings should have firstname "John"
-#
+
 #  Scenario: Filter bookings by lastname
 #    When I send a GET request with lastname parameter "Smith"
 #    Then the response status code should be 200
