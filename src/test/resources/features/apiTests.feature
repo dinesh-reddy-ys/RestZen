@@ -1,4 +1,4 @@
-#Feature: API Testing with Rest Assured
+Feature: API Testing with Rest Assured
 #
 #   Scenario: Verify the Health Check Endpoint
 #     Given The base URI is "https://restful-booker.herokuapp.com"

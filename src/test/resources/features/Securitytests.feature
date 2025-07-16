@@ -1,4 +1,4 @@
-#Feature: Booking API Security
+Feature: Booking API Security
 #
 #  Background:
 #    Given the base URL is "https://restful-booker.herokuapp.com"

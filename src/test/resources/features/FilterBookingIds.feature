@@ -1,13 +1,13 @@
-#Feature: Filtering Booking IDs
-#
-#  Background:
-#    Given the base URL is "https://restful-booker.herokuapp.com"
-#    And the endpoint is "/booking"
-#
-#  Scenario: Filter bookings by firstname
-#    When I send a GET request with firstname parameter "John"
-#    Then the response status code should be 200
-#    And all returned bookings should have firstname "John"
+Feature: Filtering Booking IDs
+
+  Background:
+    Given the base URL is "https://restful-booker.herokuapp.com"
+    And the endpoint is "/booking"
+
+  Scenario: Filter bookings by firstname
+    When I send a GET request with firstname parameter "Josh"
+    Then the response status code should be 200
+    And all returned bookings should have firstname "Josh"
 
 #  Scenario: Filter bookings by lastname
 #    When I send a GET request with lastname parameter "Smith"
