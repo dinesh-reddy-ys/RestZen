@@ -1,4 +1,4 @@
-#Feature: Booking API Edge Cases
+Feature: Booking API Edge Cases
 #
 #  Background:
 #    Given the base URL is "https://restful-booker.herokuapp.com"

@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import utilities.RequestSpecBuilderUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,8 @@ public class BookingSteps {
     // this will hold teh response of teh API request
     private Response response;
 
+    private List<Integer> bookingIds;
+
     // Step to set the base URL for the API
     @Given("the base URL is {string}")
     public void the_base_url_is(String url){
@@ -39,7 +42,8 @@ public class BookingSteps {
     // Step to send a GET request to the booking endpoint and store teh response
     @When("I send a GET request to the booking endpoint")
     public void i_send_a_getrequest_to_the_booking_endpoint(){
-        response =  given()      // Setup request spec
+        response =  given()
+                .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())// Setup request spec
                 .baseUri(baseUrl)  // Set base URI
                 .when()            // When request is sent
                 .get(endpoint);    // Perform GET on endpoint
@@ -83,6 +87,46 @@ public class BookingSteps {
             Assert.assertTrue(id instanceof Integer);
         }
     }
+    @When("I send a GET request with firstname parameter {string}")
+    public void i_send_a_get_request_with_firstname_parameter(String firstname){
+        // Sending get request with firstname as query parameter
+        response = RestAssured
+                .given()
+                .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())
+                .queryParam("firstname",firstname)
+                .when()
+                .get("/booking");
 
+        // log the response for debugging
+       //response.prettyPrint();
+
+       // Extrcat booking IDs from response
+        bookingIds = response.jsonPath().getList("bookingid");
+
+    }
+
+    @Then("all returned bookings should have firstname {string}")
+    public void all_returned_bookings_should_have_firstname(String expectedFirstname){
+        // Loop through booking IDs and verify firstname
+
+        int count = 0;
+        for(Integer bookingId : bookingIds){
+            if(count >=0) break;
+            Response bookingResponse = RestAssured
+                    .given()
+                    .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())
+                    .when()
+                    .get("/booking/"+bookingId);
+
+            String actualFirstname = bookingResponse.jsonPath().getString("firstname");
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            Assert.assertEquals(actualFirstname, expectedFirstname,"Booking ID " + bookingId +" returned incorrect firstname: " + actualFirstname);
+            count++;
+        }
+    }
 
 }
