@@ -2,8 +2,8 @@ package tests;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import model.Booking;
-import model.BookingDates;
+import pojo.Booking;
+import pojo.BookingDates;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import services.BookingService;

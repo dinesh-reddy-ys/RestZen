@@ -2,7 +2,7 @@ package services;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import model.Booking;
+import pojo.Booking;
 
 import static io.restassured.RestAssured.given;
 

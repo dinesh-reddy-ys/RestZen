@@ -1,4 +1,4 @@
-package model;
+package pojo;
 
 /**
  * Represents an authentication request containing a username and password.

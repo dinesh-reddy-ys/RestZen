@@ -1,4 +1,4 @@
-package model;
+package pojo;
 
 public class BookingDates {
     private String checkin;

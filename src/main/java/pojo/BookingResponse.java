@@ -1,4 +1,4 @@
-package model;
+package pojo;
 
 public class BookingResponse {
 private int bookingid;

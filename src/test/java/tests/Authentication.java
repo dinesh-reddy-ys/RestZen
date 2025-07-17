@@ -1,12 +1,10 @@
 package tests;
 
-import model.Booking;
-import model.BookingDates;
-import model.BookingResponse;
+import pojo.Booking;
+import pojo.BookingDates;
+import pojo.BookingResponse;
 import org.testng.annotations.Test;
-import services.BookingService;
 import utilities.RequestSpecBuilderUtil;
-import utilities.TokenManager;
 
 import static io.restassured.RestAssured.given;
 

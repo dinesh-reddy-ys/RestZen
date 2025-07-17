@@ -1,16 +1,14 @@
 package tests;
 
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import io.restassured.response.Response;
-import model.AuthRequest;
-import model.AuthResponse;
-import model.Booking;
-import model.BookingDates;
-import model.BookingResponse;
-import services.BookingService;
+import pojo.AuthRequest;
+import pojo.AuthResponse;
+import pojo.Booking;
+import pojo.BookingDates;
+import pojo.BookingResponse;
+
 import static io.restassured.RestAssured.given;
 
 public class APIChaining {

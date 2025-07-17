@@ -1,4 +1,4 @@
-package model;
+package pojo;
 
 /**
  * Represents a booking with details such as customer name, price, deposit status, 

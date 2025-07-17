@@ -3,16 +3,16 @@ Feature: Filtering Booking IDs
   Background:
     Given the base URL is "https://restful-booker.herokuapp.com"
     And the endpoint is "/booking"
-
+  @Filter
   Scenario: Filter bookings by firstname
     When I send a GET request with firstname parameter "Josh"
     Then the response status code should be 200
     And all returned bookings should have firstname "Josh"
-
-#  Scenario: Filter bookings by lastname
-#    When I send a GET request with lastname parameter "Smith"
-#    Then the response status code should be 200
-#    And all returned bookings should have lastname "Smith"
+  @Filter
+  Scenario: Filter bookings by lastname
+    When I send a GET request with lastname parameter "Smith"
+    Then the response status code should be 200
+    And all returned bookings should have lastname "Smith"
 #
 #  Scenario: Filter bookings by checkin date
 #    When I send a GET request with checkin date "2024-01-01"

@@ -1,4 +1,4 @@
-Feature: Booking API Performance
+#Feature: Booking API Performance
 #
 #  Background:
 #    Given the base URL is "https://restful-booker.herokuapp.com"

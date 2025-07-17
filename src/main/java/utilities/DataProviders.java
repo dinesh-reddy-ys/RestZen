@@ -2,9 +2,6 @@ package utilities;
 
 import org.testng.annotations.DataProvider;
 
-import model.Booking;
-import model.BookingDates;
-
 /**
  * Utility class that provides data for test cases using TestNG's @DataProvider annotation.
  * This class is responsible for supplying test data for booking-related operations.

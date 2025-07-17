@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import pojo.Booking;
 import utilities.RequestSpecBuilderUtil;
 
 import java.util.List;
@@ -26,6 +27,9 @@ public class BookingSteps {
     private Response response;
 
     private List<Integer> bookingIds;
+
+    // Booking pojo variable
+    private Booking booking;
 
     // Step to set the base URL for the API
     @Given("the base URL is {string}")
@@ -112,19 +116,52 @@ public class BookingSteps {
         int count = 0;
         for(Integer bookingId : bookingIds){
             if(count >=0) break;
-            Response bookingResponse = RestAssured
+            booking = RestAssured
                     .given()
                     .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())
                     .when()
-                    .get("/booking/"+bookingId);
+                    .get("/booking/"+bookingId)
+                    .then()
+                    .extract()
+                    .as(Booking.class);
 
-            String actualFirstname = bookingResponse.jsonPath().getString("firstname");
+            String actualFirstname = booking.getFirstname();
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             Assert.assertEquals(actualFirstname, expectedFirstname,"Booking ID " + bookingId +" returned incorrect firstname: " + actualFirstname);
+            count++;
+        }
+    }
+
+    @When("I send a GET request with lastname parameter {string}")
+    public void i_send_a_get_request_with_lastname_parameter(String lastname){
+
+        response = given()
+                .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())
+                .when()
+                .queryParam("lastname",lastname)
+                .get("/booking");
+        bookingIds = response.jsonPath().getList("bookingid");
+    }
+
+    @And("all returned bookings should have lastname {string}")
+    public void all_returned_bookings_should_have_lastname(String expectedLastname){
+        int count =  0;
+        for(int bookingid : bookingIds){
+            if(count >=4) break;
+            Booking getBooking = given()
+                    .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())
+                    .when()
+                    .get("/booking/" + bookingid)
+                    .then()
+                    .extract()
+                    .as(Booking.class);
+            String actualLastname = getBooking.getLastname();
+
+            Assert.assertEquals(actualLastname,expectedLastname,"BookingId "+ bookingid + " returned incorrect lastname " + actualLastname);
             count++;
         }
     }

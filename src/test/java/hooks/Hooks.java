@@ -3,6 +3,7 @@ package hooks;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 
@@ -21,7 +22,7 @@ public class Hooks {
                 .build();
 
         // You can also attach auth tokens, default query params, base URI atc. here
-
+        RestAssured.useRelaxedHTTPSValidation();
     }
     // This metyhod will run AFTER each scenario ends
     @After
