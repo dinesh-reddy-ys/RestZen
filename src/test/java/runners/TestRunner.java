@@ -4,7 +4,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-    features = "src/test/resources/features/FilterBookingIds.feature", //path to your .feature files
+    features = "src/test/resources/features", //path to your .feature files
     glue = {"stepDefs", "hooks"},                // Steps defs + hooks package locations
     plugin = {
             "pretty",                         // Neat console output
