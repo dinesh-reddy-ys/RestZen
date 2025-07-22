@@ -4,6 +4,7 @@ Feature: Get Booking IDs API
     Given the base URL is "https://restful-booker.herokuapp.com"
     And the endpoint is "/booking"
 
+   @Test
   Scenario: Get all booking IDs successfully
     When I send a GET request to the booking endpoint
     Then the response status code should be 200

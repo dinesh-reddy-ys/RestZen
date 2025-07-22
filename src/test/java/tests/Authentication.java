@@ -1,5 +1,6 @@
 package tests;
 
+import io.restassured.RestAssured;
 import pojo.Booking;
 import pojo.BookingDates;
 import pojo.BookingResponse;
@@ -53,5 +54,20 @@ public class Authentication {
                 .then()
                  //.log().all()
                 .statusCode(200);
+    }
+
+    @Test
+    public void getBookings(){
+        RestAssured.baseURI="https://restful-booker.herokuapp.com";
+
+
+        RestAssured.useRelaxedHTTPSValidation();
+        RestAssured.given().log().all()    //given - config , header , param
+
+                .when().get("/booking")              				//httpmethods
+
+                .then().statusCode(200) 		  			//status and validation
+                .log().all();
+
     }
 }
