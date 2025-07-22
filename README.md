@@ -18,3 +18,35 @@ src
 │   
 └── test/resources
     └── data/                       # Test data files (optional, e.g. JSON, CSV, etc.)
+
+    🚀 Features
+    - POJO Mapping: Clean  mapping of json request/repsonse bodies using POJOs.
+    - Service Layer: Encapsulates API logic for better maintainability.
+    - Utility Classes: Includes reusable components like Excel data readers, request spec builder, response spec builders, and token managers.
+    -Data-Driven Testing: Supports external data sources via DataProviders.
+
+    🛠️ Technologies Used
+    - Java
+    - RestAssured
+    - TestNG
+    - Apache POI (for Excel)
+    - Maven
+
+    🧪 How to Run Tests
+    1. Clone the repository:
+       - git clone https://github.com/dinesh-reddy-ys/RestZen
+       - cd RestZen
+
+    2. Run tests using Maven
+       mvn clean test
+
+    📌 TODO
+    - Add CI/CD integration
+    - Enhance reporting
+    - Add more test scenarios
+
+    
+
+
+    
+    
