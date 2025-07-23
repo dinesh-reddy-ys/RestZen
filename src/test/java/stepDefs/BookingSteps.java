@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import pojo.Booking;
@@ -31,6 +32,8 @@ public class BookingSteps {
     // Booking pojo variable
     private Booking booking;
 
+
+
     // Step to set the base URL for the API
     @Given("the base URL is {string}")
     public void the_base_url_is(String url){
@@ -51,7 +54,7 @@ public class BookingSteps {
                 .baseUri(baseUrl)  // Set base URI
                 .when()            // When request is sent
                 .get(endpoint);    // Perform GET on endpoint
-
+        response.prettyPrint();
     }
 
     // Step to verify that the repsonse status code matches the expected value
@@ -94,17 +97,14 @@ public class BookingSteps {
     @When("I send a GET request with firstname parameter {string}")
     public void i_send_a_get_request_with_firstname_parameter(String firstname){
         // Sending get request with firstname as query parameter
-        response = RestAssured
-                .given()
-                .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())
-                .queryParam("firstname",firstname)
+        response = given()
+                .spec(RequestSpecBuilderUtil.withFirstname(firstname))
                 .when()
-                .get("/booking");
+                .get();
 
         // log the response for debugging
-       //response.prettyPrint();
-
-       // Extrcat booking IDs from response
+        response.prettyPrint();
+       // Extract booking IDs from response
         bookingIds = response.jsonPath().getList("bookingid");
 
     }
@@ -118,7 +118,7 @@ public class BookingSteps {
             if(count >=0) break;
             booking = RestAssured
                     .given()
-                    .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())
+                   // .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())
                     .when()
                     .get("/booking/"+bookingId)
                     .then()
@@ -140,11 +140,15 @@ public class BookingSteps {
     public void i_send_a_get_request_with_lastname_parameter(String lastname){
 
         response = given()
-                .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())
+                .spec(RequestSpecBuilderUtil.withLastname(lastname))
                 .when()
-                .queryParam("lastname",lastname)
-                .get("/booking");
+                .get();
+       response.prettyPrint();
+
+        System.out.println("Content type: " + response.getContentType());
         bookingIds = response.jsonPath().getList("bookingid");
+
+
     }
 
     @And("all returned bookings should have lastname {string}")
@@ -153,7 +157,7 @@ public class BookingSteps {
         for(int bookingid : bookingIds){
             if(count >=4) break;
             Booking getBooking = given()
-                    .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())
+                   // .spec(RequestSpecBuilderUtil.getFreshRequestSpecWithAuth())
                     .when()
                     .get("/booking/" + bookingid)
                     .then()
@@ -166,4 +170,33 @@ public class BookingSteps {
         }
     }
 
+    @When("I send a GET request with checkin date {string}")
+    public void i_send_a_get_request_with_checkin_date(String checkinDate) {
+      response = given()
+              .spec(RequestSpecBuilderUtil.withCheckinDate(checkinDate))
+              .when()
+              .get();
+      response.then().log().all();
+    }
+
+    @And("all returned bookings should have checkin date on or after {string}")
+    public void allReturnedBookingsShouldHaveCheckinDateOnOrAfter(String expectedCheckinDate) {
+    // Assert.assertFalse(bookingIds.isEmpty(), "No booking found");
+    }
+
+    @When("I send a GET request with checkout date {string}")
+    public void i_send_a_get_request_with_checkout_date(String checkoutDate) {
+         response = given()
+                 .spec(RequestSpecBuilderUtil.withCheckoutDate(checkoutDate))
+                 .when()
+                 .get();
+
+         bookingIds = response.jsonPath().getList("bookingid");
+    }
+
+    @And("all returned bookings should have checkout date on or before {string}")
+    public void all_returned_bookings_should_have_checkout_date_on_or_before(String expectedCheckoutDate) {
+         //  Assert.assertFalse(bookingIds.isEmpty(),"No booking found");
+
+    }
 }

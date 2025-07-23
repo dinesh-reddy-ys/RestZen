@@ -3,6 +3,7 @@ package tests;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
+import utilities.RequestSpecBuilderUtil;
 
 import static io.restassured.RestAssured.given;
 
@@ -57,5 +58,19 @@ public class PathParam {
         // Will show filtered todos matching the query parameters
         System.out.println("Response Body:");
         System.out.println(response.asPrettyString());
+    }
+
+    @Test
+    public void getLast(){
+
+     RestAssured.useRelaxedHTTPSValidation();
+      Response  response =  given()
+              .baseUri("https://restful-booker.herokuapp.com")
+              .queryParam("lastname","Smith")
+                      .when()
+                              .get("/booking");
+
+
+      response.prettyPrint();
     }
 }
